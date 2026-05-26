@@ -20,6 +20,7 @@ public class View {
             System.out.println("3. Salir");
             System.out.println("4. Avanzar (metros)");
             System.out.println("5. Ver coches");
+            System.out.println("6. Poner gasolina");
             System.out.print("Selecciona unha opción: ");
 
             opcion = new Scanner(System.in).nextInt();
@@ -48,8 +49,19 @@ public class View {
                     String matricula = new Scanner(System.in).next();
                     System.out.println("Metros a avanzar: ");
                     double metros = new Scanner(System.in).nextDouble();
-                    boolean ok = c.avanzarCoche(matricula, metros);
-                    System.out.println(ok ? "El coche ha avanzado" : "Error: coche no encontrado");
+                    int resultado = c.avanzarCoche(matricula, metros);
+                    if (resultado == 1) System.out.println("El coche ha avanzado");
+                    else if (resultado == 0) System.out.println("Sin gasolina, reposta primero");
+                    else System.out.println("Error: coche no encontrado");
+                }
+
+                case 6 -> {
+                    System.out.println("Matricula: ");
+                    String matricula = new Scanner(System.in).next();
+                    System.out.println("Litros a añadir: ");
+                    double litros = new Scanner(System.in).nextDouble();
+                    boolean ok = c.repostarCoche(matricula, litros);
+                    System.out.println(ok ? "Depósito actualizado" : "Error: coche no encontrado");
                 }
 
                 case 5 -> {
@@ -102,7 +114,8 @@ public class View {
             System.out.println("Modelo: " + c.modelo +
                     " | Matrícula: " + c.matricula +
                     " | Velocidad: " + c.velocidad + " km/h" +
-                    " | Km recorridos: " + c.kmRecorridos);
+                    " | Km recorridos: " + c.kmRecorridos +
+                    " | Gasolina: " + String.format("%.2f", c.gasolina) + "L");
         }
     }
 }

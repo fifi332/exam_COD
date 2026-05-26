@@ -15,6 +15,9 @@ public class Coche {
     /** Kilómetros totales recorridos por el coche */
     double kmRecorridos;
 
+    /** Litros de gasolina actuales */
+    double gasolina;
+
     /**
      * Constructor de la clase Coche.
      *
@@ -26,5 +29,6 @@ public class Coche {
         this.matricula = matricula;
         this.velocidad = 0;
         this.kmRecorridos = 0;
+        this.gasolina = 0;
     }
 }

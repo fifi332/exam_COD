@@ -44,15 +44,26 @@ public class Controller {
      *
      * @param matricula Matrícula del coche
      * @param metros Metros a avanzar
-     * @return true si el coche existe
+     * @return 1 si avanzó, 0 si no hay gasolina, -1 si no existe
      */
-    public boolean avanzarCoche(String matricula, double metros){
+    public int avanzarCoche(String matricula, double metros){
         double totalKm = miModel.avanzar(matricula, metros);
-        if (totalKm >= 0) {
-            miView.muestraKm(matricula, totalKm);
-            return true;
-        }
-        return false;
+        if (totalKm == -2) return 0;
+        if (totalKm < 0) return -1;
+        miView.muestraKm(matricula, totalKm);
+        return 1;
+    }
+
+    /**
+     * Reposta gasolina en un coche.
+     *
+     * @param matricula Matrícula del coche
+     * @param litros Litros a añadir
+     * @return true si se repostó correctamente
+     */
+    public boolean repostarCoche(String matricula, double litros) {
+        double total = miModel.repostar(matricula, litros);
+        return total >= 0;
     }
 
     /**

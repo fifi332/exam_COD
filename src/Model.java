@@ -64,20 +64,50 @@ public class Model {
     }
 
     /**
+     * Añade gasolina a un coche.
+     *
+     * @param matricula Matrícula del coche
+     * @param litros Litros a añadir
+     * @return Gasolina total o -1 si no existe
+     */
+    public double repostar(String matricula, double litros) {
+        Coche c = getCoche(matricula);
+        if (c == null) return -1;
+        c.gasolina += litros;
+        return c.gasolina;
+    }
+
+    /**
+     * Obtiene la gasolina de un coche.
+     *
+     * @param matricula Matrícula del coche
+     * @return Litros o -1 si no existe
+     */
+    public double getGasolina(String matricula) {
+        Coche c = getCoche(matricula);
+        return c != null ? c.gasolina: -1;
+    }
+
+    /**
      * Hace avanzar un coche una cantidad de metros.
+     * Consume gasolina aprox. 7L por cada 100km.
      *
      * @param matricula Matrícula del coche
      * @param metros Metros a avanzar
-     * @return Kilómetros totales recorridos o -1 si no existe
+     * @return Kilómetros totales recorridos, -1 si no existe o -2 si no hay gasolina
      */
     public double avanzar(String matricula, double metros) {
         Coche c = getCoche(matricula);
-        if (c != null) {
-            double km = metros / 1000.0;
-            c.kmRecorridos += km;
-            return c.kmRecorridos;
-        }
-        return -1;
+        if (c == null) return -1;
+
+        double km = metros / 1000.0;
+        double consumo = km * 7.0 / 100.0; // 7L cada 100km
+
+        if (c.gasolina < consumo) return -2;
+
+        c.gasolina -= consumo;
+        c.kmRecorridos += km;
+        return c.kmRecorridos;
     }
 
     /**
